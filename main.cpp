@@ -8,6 +8,8 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+#include <cstdlib>
+
 using namespace std;
 
 // -------------------------------
@@ -105,7 +107,7 @@ public:
     void Bill(const vector<pair<int, int>>& item_orders) {
         ifstream open_menu("Menu.txt"); 
         ofstream latest_bill("latest_bill.txt");
-        ofstream Bill_to_csv("Bills.csv");
+        ofstream Bill_to_csv("Bills.csv",ios::app);
         int id;
         string item_name;
         float price;
@@ -158,8 +160,10 @@ string current_date = date_stream.str();
         cout << "Total: Rs. " << total << endl;
         //for saving bill to excel file
         Bill_to_csv << current_date << "," << total << endl;
+        system("notepad /p latest_bill.txt");
         if(Bill_to_csv){
             cout<<"Successfully added to bill";
+
             return;
         }
     }
@@ -453,6 +457,7 @@ int main() {
             display_menu item;
             item.add_product(food_name, price);
             cout << "Item added successfully!\n";
+            break;
         }
             else {
                 cout<<"please enter a valid price";
